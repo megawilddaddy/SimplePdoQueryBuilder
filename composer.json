@@ -1,0 +1,38 @@
+{
+    "name": "megawilddaddy/simple-pdo-query-builder",
+    "type": "php package",
+    "description": "Simple PDO Query Builder",
+    "keywords": ["pdo", "query builder"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vasily Sokolov",
+            "email": "megawilddaddy@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Megawilddaddy\\SimplePDOQueryBuilder\\": ""
+        }
+    },
+    "target-dir": "Megawilddaddy/SimplePDOQueryBuilder",
+    "require": {
+        "php": ">=5.3.3",
+        "ext-pdo": "*"
+    },
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type":"package",
+            "package": {
+                "version":"dev-master",
+                "name":"SimplePdoQueryBuilder",
+                "source": {
+                    "url":"https://github.com/megawilddaddy/SimplePdoQueryBuilder.git",
+                    "type":"git",
+                    "reference":"master"
+                }
+            }
+        }
+    ]
+}
