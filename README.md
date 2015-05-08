@@ -237,4 +237,8 @@ $stmt = $this->connection->prepare($mQ->getSql());
 $stmt->execute();
 
 $result = $stmt->fetchAll();
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 84c72a7c5be03b551c55296b2d5b63880ce7c4b9
