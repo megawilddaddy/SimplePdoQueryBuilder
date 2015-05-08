@@ -6,7 +6,7 @@
  * Time: 11:28 AM
  */
 
-namespace Megawilddaddy\SimplePdoQueryBuilder;
+namespace Megawilddaddy\SimplePDOQueryBuilder;
 
 /**
  * Class SimplePDOQueryBuilder
