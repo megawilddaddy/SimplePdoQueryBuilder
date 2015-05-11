@@ -49,6 +49,8 @@ class SimplePDOQueryBuilder
      */
     protected $sortOrder;
 
+    protected $having = [];
+
     /**
      * @return SimplePDOQueryBuilder
      */
@@ -161,7 +163,7 @@ class SimplePDOQueryBuilder
      */
     public function having($having)
     {
-        $this->having = $having;
+        $this->having []= $having;
         return $this;
     }
 
@@ -202,7 +204,7 @@ class SimplePDOQueryBuilder
             $query .= "\n GROUP BY $this->groupBy ";
         }
         if (!empty($this->having)) {
-            $query .= "\n HAVING $this->having ";
+            $query .= "\n HAVING " . implode(" AND ", $this->having);
         }
         if (!empty($this->sortBy)) {
             $query .= "\n ORDER BY $this->sortBy $this->sortOrder ";
@@ -210,5 +212,10 @@ class SimplePDOQueryBuilder
         $query .= "\n";
 
         return $query;
+    }
+
+    public function resetHaving()
+    {
+        $this->having = [];
     }
 } 
