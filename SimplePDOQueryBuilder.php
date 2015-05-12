@@ -12,6 +12,10 @@ namespace Megawilddaddy\SimplePDOQueryBuilder;
  * Class SimplePDOQueryBuilder
  * @package Megawilddaddy\SimplePdoQueryBuilder
  */
+/**
+ * Class SimplePDOQueryBuilder
+ * @package Megawilddaddy\SimplePDOQueryBuilder
+ */
 class SimplePDOQueryBuilder
 {
     /**
@@ -49,7 +53,18 @@ class SimplePDOQueryBuilder
      */
     protected $sortOrder;
 
+    /**
+     * @var array
+     */
     protected $having = [];
+    /**
+     * @var
+     */
+    protected $offset;
+    /**
+     * @var
+     */
+    protected $limit;
 
     /**
      * @return SimplePDOQueryBuilder
@@ -87,10 +102,17 @@ class SimplePDOQueryBuilder
     public function subQuery($alias)
     {
         $sq = new SimplePDOQueryBuilder();
-        $sq->alias = $alias;
+        $sq->setAlias($alias);
         return $sq;
     }
 
+    /**
+     * @param $alias
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    }
 
     /**
      * @param $from
@@ -209,13 +231,32 @@ class SimplePDOQueryBuilder
         if (!empty($this->sortBy)) {
             $query .= "\n ORDER BY $this->sortBy $this->sortOrder ";
         }
+        if ($this->limit) {
+            $query .= "\n LIMIT $this->limit";
+            if ($this->offset) {
+                $query .= " OFFSET " . $this->offset;
+            }
+        }
         $query .= "\n";
 
         return $query;
     }
 
+    /**
+     *
+     */
     public function resetHaving()
     {
         $this->having = [];
+    }
+
+    /**
+     * @param $limit
+     * @param $offset
+     */
+    public function limit($limit, $offset = null)
+    {
+        $this->limit = $limit;
+        $this->offset = $offset;
     }
 } 
