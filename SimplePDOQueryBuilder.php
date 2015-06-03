@@ -12,10 +12,6 @@ namespace Megawilddaddy\SimplePDOQueryBuilder;
  * Class SimplePDOQueryBuilder
  * @package Megawilddaddy\SimplePdoQueryBuilder
  */
-/**
- * Class SimplePDOQueryBuilder
- * @package Megawilddaddy\SimplePDOQueryBuilder
- */
 class SimplePDOQueryBuilder
 {
     /**
@@ -65,6 +61,11 @@ class SimplePDOQueryBuilder
      * @var
      */
     protected $limit;
+
+    /**
+     * @var array
+     */
+    protected $union = [];
 
     /**
      * @return SimplePDOQueryBuilder
@@ -162,6 +163,21 @@ class SimplePDOQueryBuilder
     }
 
     /**
+     * @param $join
+     * @internal param string $condition
+     * @return $this
+     */
+    public function union($join)
+    {
+        if ($join instanceof SimplePDOQueryBuilder) {
+            $this->union[] = " UNION {$join->getSql()}";
+        } else {
+            $this->union[] = ' UNION ' . $join;
+        }
+        return $this;
+    }
+
+    /**
      * @param $condition
      * @return $this
      */
@@ -237,6 +253,11 @@ class SimplePDOQueryBuilder
                 $query .= " OFFSET " . $this->offset;
             }
         }
+
+        if (!empty($this->union)) {
+            $query .= implode(' ', $this->union);
+        }
+
         $query .= "\n";
 
         return $query;
@@ -258,5 +279,21 @@ class SimplePDOQueryBuilder
     {
         $this->limit = $limit;
         $this->offset = $offset;
+    }
+
+    /**
+     *
+     */
+    public function resetLimit()
+    {
+        $this->limit = null;
+    }
+
+    /**
+     *
+     */
+    public function resetSorting()
+    {
+        $this->sortBy = null;
     }
 } 
