@@ -109,10 +109,12 @@ class SimplePDOQueryBuilder
 
     /**
      * @param $alias
+     * @return $this
      */
     public function setAlias($alias)
     {
         $this->alias = $alias;
+        return $this;
     }
 
     /**
