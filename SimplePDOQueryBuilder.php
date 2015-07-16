@@ -220,11 +220,13 @@ class SimplePDOQueryBuilder
     /**
      * @param $sortBy
      * @param string $sortOrder
+     * @return $this
      */
     public function orderBy($sortBy, $sortOrder = 'DESC')
     {
         $this->sortBy = $sortBy;
         $this->sortOrder = $sortOrder;
+        return $this;
     }
 
     /**
