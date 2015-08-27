@@ -12,6 +12,10 @@ namespace Megawilddaddy\SimplePDOQueryBuilder;
  * Class SimplePDOQueryBuilder
  * @package Megawilddaddy\SimplePdoQueryBuilder
  */
+/**
+ * Class SimplePDOQueryBuilder
+ * @package Megawilddaddy\SimplePDOQueryBuilder
+ */
 class SimplePDOQueryBuilder
 {
     /**
@@ -66,6 +70,11 @@ class SimplePDOQueryBuilder
      * @var array
      */
     protected $union = [];
+
+    /**
+     * @var
+     */
+    protected $groupBy;
 
     /**
      * @return SimplePDOQueryBuilder
@@ -299,5 +308,13 @@ class SimplePDOQueryBuilder
     public function resetSorting()
     {
         $this->sortBy = null;
+    }
+
+    /**
+     *
+     */
+    public function resetGroupBy()
+    {
+        $this->groupBy = null;
     }
 } 
