@@ -16,6 +16,10 @@ namespace Megawilddaddy\SimplePDOQueryBuilder;
  * Class SimplePDOQueryBuilder
  * @package Megawilddaddy\SimplePDOQueryBuilder
  */
+/**
+ * Class SimplePDOQueryBuilder
+ * @package Megawilddaddy\SimplePDOQueryBuilder
+ */
 class SimplePDOQueryBuilder
 {
     /**
@@ -75,6 +79,11 @@ class SimplePDOQueryBuilder
      * @var
      */
     protected $groupBy;
+
+    /**
+     * @var array
+     */
+    private $parameters = array();
 
     /**
      * @return SimplePDOQueryBuilder
@@ -317,4 +326,17 @@ class SimplePDOQueryBuilder
     {
         $this->groupBy = null;
     }
-} 
+
+    public function addParameter($k, $v)
+    {
+        $this->parameters[$k] = $v;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+}
