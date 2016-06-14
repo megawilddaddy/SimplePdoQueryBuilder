@@ -346,6 +346,6 @@ class SimplePDOQueryBuilder
         foreach ($this->getParameters() as $k => $v) {
             $sql = str_replace(":$k", "'$v'", $sql);
         }
-        die("<pre>" . $this->getSql() . "</pre>");
+        die("<pre>" . $sql . "</pre>");
     }
 }
