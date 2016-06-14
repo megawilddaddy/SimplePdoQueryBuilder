@@ -160,9 +160,9 @@ class SimplePDOQueryBuilder
     public function leftJoin($leftJoin, $condition = '')
     {
         if ($leftJoin instanceof SimplePDOQueryBuilder) {
-            $this->joins[] = " LEFT JOIN ( {$leftJoin->getSql()} ) as {$leftJoin->getAlias()} ON $condition";
+            $this->joins[] = "\n LEFT JOIN ( {$leftJoin->getSql()} ) as {$leftJoin->getAlias()} ON $condition";
         } else {
-            $this->joins[] = ' LEFT JOIN ' . $leftJoin . ($condition ? ' ON ' . $condition : '');
+            $this->joins[] = "\n LEFT JOIN " . $leftJoin . ($condition ? ' ON ' . $condition : '');
         }
         return $this;
     }
@@ -175,9 +175,9 @@ class SimplePDOQueryBuilder
     public function join($join, $condition = '')
     {
         if ($join instanceof SimplePDOQueryBuilder) {
-            $this->joins[] = " JOIN ( {$join->getSql()} ) as {$join->getAlias()} ON $condition";
+            $this->joins[] = "\n JOIN ( {$join->getSql()} ) as {$join->getAlias()} ON $condition";
         } else {
-            $this->joins[] = ' JOIN ' . $join . ($condition ? ' ON ' . $condition : '');
+            $this->joins[] = "\n JOIN " . $join . ($condition ? ' ON ' . $condition : '');
         }
         return $this;
     }
@@ -338,5 +338,14 @@ class SimplePDOQueryBuilder
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    public function dump()
+    {
+        $sql = $this->getSql();
+        foreach ($this->getParameters() as $k => $v) {
+            $sql = str_replace(":$k", "'$v'", $sql);
+        }
+        die("<pre>" . $this->getSql() . "</pre>");
     }
 }
