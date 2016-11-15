@@ -30,4 +30,21 @@ class SimplePDOQueryBuilderExpr
         }
         return "$field IN (" . implode(',', $list) . ")";
     }
+
+    /**
+     * @param $field
+     * @param $list
+     * @param bool $quote
+     * @return string
+     */
+    public function notIn($field, $list, $quote = true)
+    {
+        if (!is_array($list)) {
+            $list = explode(',', $list);
+        }
+        if ($quote) {
+            $list = array_map(function($el) {return " '$el' ";}, $list);
+        }
+        return "$field NOT IN (" . implode(',', $list) . ")";
+    }
 } 
