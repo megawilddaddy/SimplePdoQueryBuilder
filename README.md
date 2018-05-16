@@ -3,15 +3,7 @@ Simple PDO Query Builder. Useful to generate low level queries with ease.
 
 1) Installation
 
-    "repositories": [
-        {
-            "url": "https://github.com/megawilddaddy/SimplePdoQueryBuilder.git",
-            "type": "git"
-        }
-    ],
-    "require": {
-        "megawilddaddy/simple-pdo-query-builder": "dev-master"
-    },
+    composer require megawilddaddy/simple-pdo-query-builder
 
 2) Usage
 
