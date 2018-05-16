@@ -1,6 +1,6 @@
 {
     "name": "megawilddaddy/simple-pdo-query-builder",
-    "type": "php package",
+    "type": "symfony-bundle",
     "description": "Simple PDO Query Builder",
     "keywords": ["pdo", "query builder"],
     "license": "MIT",
