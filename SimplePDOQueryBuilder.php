@@ -60,6 +60,11 @@ class SimplePDOQueryBuilder
     /**
      * @var array
      */
+    protected $extra = [];
+
+    /**
+     * @var array
+     */
     protected $having = [];
     /**
      * @var
@@ -347,5 +352,21 @@ class SimplePDOQueryBuilder
             $sql = str_replace(":$k", "'$v'", $sql);
         }
         die("<pre>" . $sql . "</pre>");
+    }
+
+    /**
+     * @return array
+     */
+    public function getExtra()
+    {
+        return $this->extra;
+    }
+
+    /**
+     * @param array $extra
+     */
+    public function setExtra($extra)
+    {
+        $this->extra = $extra;
     }
 }
