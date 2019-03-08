@@ -257,8 +257,11 @@ class SimplePDOQueryBuilder
      */
     public function getSql()
     {
-        $query = "\n SELECT " . implode(',', $this->fields) ."\n FROM " . $this->from;
+        $query = "\n SELECT " . implode(',', $this->fields);
 
+        if (!empty($this->from)) {
+            $query .= "\n FROM " . $this->from;
+        }
         if (!empty($this->joins)) {
             $query .= implode(' ', $this->joins);
         }
