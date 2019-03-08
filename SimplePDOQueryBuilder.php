@@ -10,14 +10,6 @@ namespace Megawilddaddy\SimplePDOQueryBuilder;
 
 /**
  * Class SimplePDOQueryBuilder
- * @package Megawilddaddy\SimplePdoQueryBuilder
- */
-/**
- * Class SimplePDOQueryBuilder
- * @package Megawilddaddy\SimplePDOQueryBuilder
- */
-/**
- * Class SimplePDOQueryBuilder
  * @package Megawilddaddy\SimplePDOQueryBuilder
  */
 class SimplePDOQueryBuilder
