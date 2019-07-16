@@ -364,4 +364,92 @@ class SimplePDOQueryBuilder
     {
         $this->extra = $extra;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWhere()
+    {
+        return $this->where;
+    }
+
+    /**
+     * @return array
+     */
+    public function getJoins()
+    {
+        return $this->joins;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSortBy()
+    {
+        return $this->sortBy;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSortOrder()
+    {
+        return $this->sortOrder;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHaving()
+    {
+        return $this->having;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOffset()
+    {
+        return $this->offset;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUnion()
+    {
+        return $this->union;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupBy()
+    {
+        return $this->groupBy;
+    }
 }
