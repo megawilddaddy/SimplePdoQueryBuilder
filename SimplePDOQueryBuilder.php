@@ -40,6 +40,11 @@ class SimplePDOQueryBuilder
     protected $joins = [];
 
     /**
+     * @var array
+     */
+    protected $leftJoins = [];
+
+    /**
      * @var
      */
     protected $sortBy;
@@ -157,9 +162,9 @@ class SimplePDOQueryBuilder
     public function leftJoin($leftJoin, $condition = '')
     {
         if ($leftJoin instanceof SimplePDOQueryBuilder) {
-            $this->joins[] = "\n LEFT JOIN ( {$leftJoin->getSql()} ) as {$leftJoin->getAlias()} ON $condition";
+            $this->leftJoins[] = "\n LEFT JOIN ( {$leftJoin->getSql()} ) as {$leftJoin->getAlias()} ON $condition";
         } else {
-            $this->joins[] = "\n LEFT JOIN " . $leftJoin . ($condition ? ' ON ' . $condition : '');
+            $this->leftJoins[] = "\n LEFT JOIN " . $leftJoin . ($condition ? ' ON ' . $condition : '');
         }
         return $this;
     }
@@ -257,6 +262,9 @@ class SimplePDOQueryBuilder
         if (!empty($this->joins)) {
             $query .= implode(' ', $this->joins);
         }
+        if (!empty($this->leftJoins)) {
+            $query .= implode(' ', $this->leftJoins);
+        }
         if (!empty($this->where)) {
             $query .= "\n WHERE " . implode(" AND ", $this->where);
         }
@@ -291,6 +299,14 @@ class SimplePDOQueryBuilder
     public function resetHaving()
     {
         $this->having = [];
+    }
+
+    /**
+     *
+     */
+    public function resetLeftJoins()
+    {
+        $this->leftJoins = [];
     }
 
     /**
