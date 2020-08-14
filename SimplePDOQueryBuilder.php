@@ -221,6 +221,7 @@ class SimplePDOQueryBuilder
 
         $this->joinOrd++;
         $this->joins[$this->joinOrd] = $join;
+        $this->leftJoins[] = $this->joinOrd;
 
         return $this;
     }
