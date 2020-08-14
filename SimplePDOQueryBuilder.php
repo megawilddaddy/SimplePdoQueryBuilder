@@ -33,7 +33,10 @@ class SimplePDOQueryBuilder
      * @var
      */
     protected $alias;
-
+    /**
+     * @var int
+     */
+    protected $joinOrd = 0;
     /**
      * @var array
      */
@@ -128,16 +131,6 @@ class SimplePDOQueryBuilder
     }
 
     /**
-     * @param $alias
-     * @return $this
-     */
-    public function setAlias($alias)
-    {
-        $this->alias = $alias;
-        return $this;
-    }
-
-    /**
      * @param $from
      * @return $this
      */
@@ -155,101 +148,6 @@ class SimplePDOQueryBuilder
     }
 
     /**
-     * @param $leftJoin
-     * @param string $condition
-     * @return $this
-     */
-    public function leftJoin($leftJoin, $condition = '')
-    {
-        if ($leftJoin instanceof SimplePDOQueryBuilder) {
-            $this->leftJoins[] = "\n LEFT JOIN ( {$leftJoin->getSql()} ) as {$leftJoin->getAlias()} ON $condition";
-        } else {
-            $this->leftJoins[] = "\n LEFT JOIN " . $leftJoin . ($condition ? ' ON ' . $condition : '');
-        }
-        return $this;
-    }
-
-    /**
-     * @param $join
-     * @param string $condition
-     * @return $this
-     */
-    public function join($join, $condition = '')
-    {
-        if ($join instanceof SimplePDOQueryBuilder) {
-            $this->joins[] = "\n JOIN ( {$join->getSql()} ) as {$join->getAlias()} ON $condition";
-        } else {
-            $this->joins[] = "\n JOIN " . $join . ($condition ? ' ON ' . $condition : '');
-        }
-        return $this;
-    }
-
-    /**
-     * @param $join
-     * @internal param string $condition
-     * @return $this
-     */
-    public function union($join)
-    {
-        if ($join instanceof SimplePDOQueryBuilder) {
-            $this->union[] = " UNION {$join->getSql()}";
-        } else {
-            $this->union[] = ' UNION ' . $join;
-        }
-        return $this;
-    }
-
-    /**
-     * @param $condition
-     * @return $this
-     */
-    public function where($condition)
-    {
-        $this->where[] = $condition;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
-
-    /**
-     * @param $having
-     * @return $this
-     */
-    public function having($having)
-    {
-        $this->having []= $having;
-        return $this;
-    }
-
-    /**
-     * @param $groupBy
-     * @return $this
-     */
-    public function group($groupBy)
-    {
-        $this->groupBy = $groupBy;
-        return $this;
-    }
-
-    /**
-     * @param $sortBy
-     * @param string $sortOrder
-     * @return $this
-     */
-    public function orderBy($sortBy, $sortOrder = 'DESC')
-    {
-        $this->sortBy = $sortBy;
-        $this->sortOrder = $sortOrder;
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getSql()
@@ -261,9 +159,6 @@ class SimplePDOQueryBuilder
         }
         if (!empty($this->joins)) {
             $query .= implode(' ', $this->joins);
-        }
-        if (!empty($this->leftJoins)) {
-            $query .= implode(' ', $this->leftJoins);
         }
         if (!empty($this->where)) {
             $query .= "\n WHERE " . implode(" AND ", $this->where);
@@ -294,6 +189,120 @@ class SimplePDOQueryBuilder
     }
 
     /**
+     * @return mixed
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @param $alias
+     * @return $this
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+        return $this;
+    }
+
+    /**
+     * @param $leftJoin
+     * @param string $condition
+     * @return $this
+     */
+    public function leftJoin($leftJoin, $condition = '')
+    {
+        if ($leftJoin instanceof SimplePDOQueryBuilder) {
+            $join = "\n LEFT JOIN ( {$leftJoin->getSql()} ) as {$leftJoin->getAlias()} ON $condition";
+        } else {
+            $join = "\n LEFT JOIN " . $leftJoin . ($condition ? ' ON ' . $condition : '');
+        }
+
+        $this->joinOrd++;
+        $this->joins[$this->joinOrd] = $join;
+
+        return $this;
+    }
+
+    /**
+     * @param $join
+     * @param string $condition
+     * @return $this
+     */
+    public function join($join, $condition = '')
+    {
+        if ($join instanceof SimplePDOQueryBuilder) {
+            $join = "\n JOIN ( {$join->getSql()} ) as {$join->getAlias()} ON $condition";
+        } else {
+            $join = "\n JOIN " . $join . ($condition ? ' ON ' . $condition : '');
+        }
+
+        $this->joinOrd++;
+        $this->joins[$this->joinOrd] = $join;
+
+        return $this;
+    }
+
+
+    /**
+     * @param $join
+     * @return $this
+     * @internal param string $condition
+     */
+    public function union($join)
+    {
+        if ($join instanceof SimplePDOQueryBuilder) {
+            $this->union[] = " UNION {$join->getSql()}";
+        } else {
+            $this->union[] = ' UNION ' . $join;
+        }
+        return $this;
+    }
+
+    /**
+     * @param $condition
+     * @return $this
+     */
+    public function where($condition)
+    {
+        $this->where[] = $condition;
+        return $this;
+    }
+
+    /**
+     * @param $having
+     * @return $this
+     */
+    public function having($having)
+    {
+        $this->having [] = $having;
+        return $this;
+    }
+
+    /**
+     * @param $groupBy
+     * @return $this
+     */
+    public function group($groupBy)
+    {
+        $this->groupBy = $groupBy;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy
+     * @param string $sortOrder
+     * @return $this
+     */
+    public function orderBy($sortBy, $sortOrder = 'DESC')
+    {
+        $this->sortBy = $sortBy;
+        $this->sortOrder = $sortOrder;
+        return $this;
+    }
+
+    /**
      *
      */
     public function resetHaving()
@@ -306,7 +315,11 @@ class SimplePDOQueryBuilder
      */
     public function resetLeftJoins()
     {
-        $this->leftJoins = [];
+        if (!empty($this->leftJoins)) {
+            foreach ($this->leftJoins as $ord) {
+                unset($this->joins[$ord]);
+            }
+        }
     }
 
     /**
@@ -348,14 +361,6 @@ class SimplePDOQueryBuilder
         $this->parameters[$k] = $v;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
-    }
-
     public function dump()
     {
         $sql = $this->getSql();
@@ -363,6 +368,14 @@ class SimplePDOQueryBuilder
             $sql = str_replace(":$k", "'$v'", $sql);
         }
         die("<pre>" . $sql . "</pre>");
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
     }
 
     /**
