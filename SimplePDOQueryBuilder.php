@@ -196,6 +196,11 @@ class SimplePDOQueryBuilder
         return $this->alias;
     }
 
+    public function resetParameters(): void
+    {
+        $this->parameters = [];
+    }
+
     /**
      * @param $alias
      * @return $this
